@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """
 magicpin AI Challenge — LLM-Powered Judge Simulator
-====================================================
 
 A strict but fair judge that scores your bot and explains WHY.
-
 HOW TO USE:
 1. Edit the CONFIGURATION section below (lines 25-45)
 2. Set your LLM provider and API key
@@ -12,8 +10,6 @@ HOW TO USE:
 4. Run: python judge_simulator.py
 
 That's it!
-
-Author: magicpin AI Challenge Team
 """
 
 import os
@@ -24,9 +20,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ==========================================
+
 # CONFIGURATION - EDIT THIS SECTION
-# ==========================================
+
 
 BOT_URL = os.environ.get("BOT_URL", "http://localhost:8081")
 LLM_PROVIDER = "mistral"
@@ -35,9 +31,9 @@ LLM_MODEL = ""
 OLLAMA_URL = "http://localhost:11434"
 TEST_SCENARIO = "all"
 
-# ==========================================
+
 # END OF CONFIGURATION
-# ==========================================
+
 import re
 import socket
 from datetime import datetime
@@ -51,9 +47,8 @@ from abc import ABC, abstractmethod
 TIMEOUT_LLM = 45
 DATASET_DIR = Path(__file__).parent / "dataset"
 
-# =============================================================================
+
 # TERMINAL OUTPUT
-# =============================================================================
 
 class Colors:
     HEADER = '\033[95m'
@@ -128,9 +123,9 @@ class ScoreResult:
         return max(0, self.specificity + self.category_fit + self.merchant_fit +
                    self.decision_quality + self.engagement_compulsion - self.penalties)
 
-# =============================================================================
+
 # LLM PROVIDERS
-# =============================================================================
+
 
 class LLMProvider(ABC):
     @abstractmethod
@@ -376,9 +371,9 @@ def create_provider() -> LLMProvider:
 
     return providers[LLM_PROVIDER]()
 
-# =============================================================================
+
 # DATASET & BOT CLIENT
-# =============================================================================
+
 
 class DatasetLoader:
     def __init__(self, dataset_dir: Path):
@@ -465,9 +460,8 @@ class BotClient:
             "received_at": datetime.utcnow().isoformat() + "Z", "turn_number": turn
         })
 
-# =============================================================================
 # LLM SCORING ENGINE
-# =============================================================================
+
 
 class LLMScorer:
     """Scores messages using LLM and provides detailed reasoning."""
@@ -947,9 +941,9 @@ class JudgeSimulator:
         else:
             print(f"\n  {Colors.RED}BELOW EXPECTATIONS{Colors.RESET}")
 
-# =============================================================================
+
 # ENTRY POINT
-# =============================================================================
+
 
 def main():
     print_header("magicpin AI Challenge — LLM Judge")
